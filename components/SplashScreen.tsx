@@ -38,10 +38,10 @@ const CURVES = [
 ];
 
 const CURVE_ICONS = [
-  ['bulb-outline', 'flash-outline', 'alarm-outline'],
-  ['globe-outline', 'book-outline', 'settings-outline'],
+  ['bulb', 'flash', 'alarm'],
+  ['globe', 'logo-ionic', 'settings'],
 ];
-const EXTERNAL_ICONS = ['heart-outline', 'flag-outline', 'star-outline'];
+const EXTERNAL_ICONS = ['heart', 'flag', 'star'];
 
 
 export default function SplashScreen({ onFinish } : { onFinish: () => void }) {
