@@ -283,7 +283,6 @@ export default function SplashScreen({ onFinish } : { onFinish: () => void }) {
                             </View>
                         </TouchableOpacity>
                     </View>
-                        
                 </Animated.View>
             </View>
         </>
@@ -297,7 +296,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    logo: { width: 64, height: 64 },
+    logo: { width: 96, height: 96 },
     textContainer: { 
         flex: 1,
         marginTop: 50,
