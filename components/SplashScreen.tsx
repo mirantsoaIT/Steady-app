@@ -86,12 +86,12 @@ export default function SplashScreen({ onFinish } : { onFinish: () => void }) {
         sloganY.value = withDelay(300, withSpring(-50, { duration: 500 }));
 
         // ← cercle en même temps que textContainer
-        circleScale.value = withDelay(300, withSpring(1, { damping: 10, stiffness: 80 }));
-        circleOpacity.value = withDelay(300, withTiming(1, { duration: 600 }));
+        circleScale.value = withDelay(400, withSpring(1, { damping: 10, stiffness: 80 }));
+        circleOpacity.value = withDelay(400, withTiming(1, { duration: 400 }));
     };
 
     const startTyping = () => {
-        textOpacity.value = withTiming(1, { duration: 300 });
+        textOpacity.value = withTiming(1, { duration: 500 });
         let index = 0;
         const typingInterval = setInterval(() => {
             if (index < FULL_TEXT.length) {
@@ -99,7 +99,7 @@ export default function SplashScreen({ onFinish } : { onFinish: () => void }) {
                 index++;
             } else {
                 clearInterval(typingInterval);
-                setTimeout(() => runOnJS(startExitAnimation)(), 500);
+                setTimeout(() => runOnJS(startExitAnimation)(), 400);
             }
         }, 40);
     };
@@ -218,7 +218,7 @@ export default function SplashScreen({ onFinish } : { onFinish: () => void }) {
                 </Animated.View>
                 <View style={styles.row}>
                     <Animated.Image
-                        source={require('../assets/images/react-logo.png')}
+                        source={require('../assets/images/steady-logo.png')}
                         style={[styles.logo, logoStyle]}
                         resizeMode="contain"
                     />
@@ -293,7 +293,7 @@ export default function SplashScreen({ onFinish } : { onFinish: () => void }) {
 const styles = StyleSheet.create({
     splashContainer: {
         flex: 1,
-        backgroundColor: '#F3F4F4',
+        backgroundColor: '#e6e6e6',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
         bottom: -50,
         gap: 50
     },
-    logoName: { fontSize: 24, color: '#1D546D', fontWeight: 'bold' },
+    logoName: { fontSize: 24, color: '#1D546D', fontWeight: 'bold', fontFamily: 'Montserrat_500Medium' },
     slogan: { fontSize: 30, color: '#F3F4F4', fontWeight: '400', textAlign: 'center', fontFamily: 'AnnieUseYourTelescope_400Regular' },
     sloganBloc: { marginTop: 40},
     row: { flexDirection: 'row', alignItems: 'center', gap: 5},
