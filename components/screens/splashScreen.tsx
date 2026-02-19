@@ -16,6 +16,7 @@ import Animated, {
 import { Ionicons } from '@expo/vector-icons';
 import Svg, { Path } from 'react-native-svg';
 import { useWindowDimensions } from 'react-native';
+import Button from '../ui/button';
 
 
 const FULL_TEXT = 'STEADY';
@@ -91,7 +92,7 @@ export default function SplashScreen({ onFinish } : { onFinish: () => void }) {
     };
 
     const startTyping = () => {
-        textOpacity.value = withTiming(1, { duration: 500 });
+        textOpacity.value = withTiming(1, { duration: 100 });
         let index = 0;
         const typingInterval = setInterval(() => {
             if (index < FULL_TEXT.length) {
@@ -117,11 +118,11 @@ export default function SplashScreen({ onFinish } : { onFinish: () => void }) {
         );
 
         // Animation logo
-        logoOpacity.value = withTiming(1, { duration: 900 });
+        logoOpacity.value = withTiming(1, { duration: 300 });
         logoY.value = withSequence(
-            withDelay(600, withTiming(0, { duration: 400 })),
-            withTiming(-120, { duration: 800 }),
-            withSpring(0, { damping: 15, stiffness: 200, mass: 1 }, (finished) => {
+            withDelay(600, withTiming(0, { duration: 600 })),
+            withTiming(-120, { duration: 600 }),
+            withSpring(0, { damping: 18, stiffness: 400, mass: 2 }, (finished) => {
                 if (finished) runOnJS(startTyping)();
             })
         );
@@ -183,7 +184,7 @@ export default function SplashScreen({ onFinish } : { onFinish: () => void }) {
     });
         return (
             <Animated.View style={animatedStyle}>
-            <Ionicons name={iconName as any} size={iconSize} color={iconColor} />
+                <Ionicons name={iconName as any} size={iconSize} color={iconColor} />
             </Animated.View>
         );
     };
@@ -218,7 +219,7 @@ export default function SplashScreen({ onFinish } : { onFinish: () => void }) {
                 </Animated.View>
                 <View style={styles.row}>
                     <Animated.Image
-                        source={require('../assets/images/steady-logo.png')}
+                        source={require('../../assets/images/steady-logo.png')}
                         style={[styles.logo, logoStyle]}
                         resizeMode="contain"
                     />
@@ -256,7 +257,6 @@ export default function SplashScreen({ onFinish } : { onFinish: () => void }) {
                                 iconColor="rgba(255, 255, 255, 0.18)"
                             />
                         ))}
-
                         {/* ← Icônes animées courbe 2 */}
                         {CURVE_ICONS[1].map((icon, i) => (
                             <AnimatedIcon
@@ -270,18 +270,13 @@ export default function SplashScreen({ onFinish } : { onFinish: () => void }) {
                             />
                         ))}
                     </View>
-                    <View style={{ top: -110, flex: 1, alignItems: 'center', justifyContent: 'center', gap: 20}}>
+                    <View style={{ top: -110, flex: 1, alignItems: 'center', justifyContent: 'center', gap: 100}}>
                         <View style={styles.sloganBloc}>
                             <Text style={styles.slogan}>"L'ordre dans tes tâches,</Text>
                             <Text style={styles.slogan}>le calme dans tes doigts"</Text>
                         </View>
                         {/* ← bouton commencer */}
-                        <TouchableOpacity style={styles.button} onPress={() => onFinish()}>
-                            <View style={styles.buttonContent}>
-                                <Text style={styles.buttonText}>Commencer</Text>
-                                <Ionicons name="arrow-forward" size={18} color="#061E29" />
-                            </View>
-                        </TouchableOpacity>
+                        <Button text="Commencer" onPress={() => onFinish()} variant="filled" icon="arrow-forward" size="medium" />
                     </View>
                 </Animated.View>
             </View>
@@ -317,26 +312,6 @@ const styles = StyleSheet.create({
     slogan: { fontSize: 30, color: '#F3F4F4', fontWeight: '400', textAlign: 'center', fontFamily: 'AnnieUseYourTelescope_400Regular' },
     sloganBloc: { marginTop: 40},
     row: { flexDirection: 'row', alignItems: 'center', gap: 5},
-    button: {
-        marginTop: 80,
-        paddingVertical: 14,
-        paddingHorizontal: 40,
-        borderRadius: 30,
-        borderWidth: 1.5,
-        borderColor: '#5F9598',
-        backgroundColor: '#5F9598',
-    },
-    buttonContent: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 8,
-    },
-    buttonText: {
-        color: '#061E29',
-        fontSize: 16,
-        fontFamily: 'Montserrat_500Medium',
-        letterSpacing: 1,
-    },
     curves: {
         position: 'absolute',
         bottom: '48%',
