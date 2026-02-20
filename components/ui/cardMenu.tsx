@@ -57,7 +57,7 @@ export default function CardMenu({
 const styles = StyleSheet.create({
     card: {
         flexDirection: 'row',
-        borderRadius: 60,
+        borderRadius: 50,
         paddingLeft: 32,
         paddingTop: 24,
         alignItems: 'flex-start',

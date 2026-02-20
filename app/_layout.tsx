@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Stack } from 'expo-router';
 import SplashScreenComponent from '../components/screens/splashScreen';
-import { useFonts, Montserrat_400Regular, Montserrat_700Bold, Montserrat_500Medium, Montserrat_300Light, Montserrat_200ExtraLight } from '@expo-google-fonts/montserrat';
+import { useFonts, Montserrat_400Regular, Montserrat_700Bold, Montserrat_500Medium, Montserrat_300Light, Montserrat_200ExtraLight, Montserrat_600SemiBold } from '@expo-google-fonts/montserrat';
 import { AnnieUseYourTelescope_400Regular } from '@expo-google-fonts/annie-use-your-telescope/400Regular';
 
 export default function RootLayout() {
@@ -13,6 +13,7 @@ export default function RootLayout() {
     Montserrat_400Regular,
     Montserrat_300Light,
     Montserrat_200ExtraLight,
+    Montserrat_600SemiBold,
     AnnieUseYourTelescope_400Regular
   });
 
