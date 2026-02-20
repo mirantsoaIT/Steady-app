@@ -1,10 +1,92 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, ScrollView, BackHandler, Platform } from 'react-native';
 import CardMenu from '@/components/ui/cardMenu';
 import { Power } from 'lucide-react-native';
 import LottieView from 'lottie-react-native';
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue,
+  useAnimatedStyle,
+  interpolate,
+  Extrapolate,
+  SharedValue,
+  FadeInUp
+} from 'react-native-reanimated';
+
+// Composant card animé
+const CARD_HEIGHT = 220;
+const GAP = 10;
+const TOTAL_HEIGHT = CARD_HEIGHT + GAP;
+
+const AnimatedCard = ({ item, index, scrollY }: { item: any; index: number; scrollY: SharedValue<number> }) => {
+  const animatedStyle = useAnimatedStyle(() => {
+    // On calcule la position de la carte par rapport au scroll
+    const inputRange = [
+      (index - 1) * TOTAL_HEIGHT, // Carte précédente
+      index * TOTAL_HEIGHT,       // Carte actuelle
+      (index + 1) * TOTAL_HEIGHT  // Carte suivante
+    ];
+
+    // Effet de réduction et d'opacité quand la carte sort par le haut
+    const scale = interpolate(
+      scrollY.value,
+      [index * TOTAL_HEIGHT, (index + 1) * TOTAL_HEIGHT],
+      [1, 0.9],
+      Extrapolate.CLAMP
+    );
+
+    const opacity = interpolate(
+      scrollY.value,
+      [index * TOTAL_HEIGHT, (index + 1.3) * TOTAL_HEIGHT],
+      [1, 0],
+      Extrapolate.CLAMP
+    );
+
+    // Petit effet de translation pour donner une impression de profondeur
+    const translateY = interpolate(
+      scrollY.value,
+      [index * TOTAL_HEIGHT, (index + 1) * TOTAL_HEIGHT],
+      [0, -20],
+      Extrapolate.CLAMP
+    );
+
+    return {
+      transform: [{ scale }, { translateY }],
+      opacity,
+    };
+  });
+
+  return (
+    <Animated.View 
+      // Animation d'entrée FadeInUp au chargement de la page
+      entering={FadeInUp.delay(index * 100).duration(600).springify()}
+      style={[{ height: CARD_HEIGHT, marginBottom: GAP }, animatedStyle]}
+    >
+      <CardMenu
+        {...item}
+        onPress={() => console.log(`Open ${item.title}`)}
+      />
+    </Animated.View>
+  );
+};
 
 export default function App() {
+  const scrollY = useSharedValue(0);
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.value = event.contentOffset.y;
+    },
+  });
+
+  const handleExit = () => {
+    if (Platform.OS === 'android') {
+      BackHandler.exitApp();
+    } else {
+      // pour des raisons de sécurité/UX.
+      console.log("Fermeture non supportée nativement sur iOS");
+    }
+  };
+
   const menuItems = [
     { id: 1, image: require('../../assets/images/kinetic.png'), label: 'Jouer' },
     { id: 2, image: require('../../assets/images/wallet.jpg'), label: 'Gérer' },
@@ -62,7 +144,7 @@ export default function App() {
           <Image source={require('../../assets/images/steady-logo.png')} style={styles.steadyLogo} resizeMode="contain"/>
           <Text style={{ fontSize: 20, fontFamily: 'Montserrat_600SemiBold', color: '#061E29' }}>STEADY</Text>
         </View>
-        <TouchableOpacity style={{ padding: 8, borderRadius: 100 }}>
+        <TouchableOpacity style={{ padding: 8, borderRadius: 100 }} onPress={handleExit}>
           <Power size={22} color="#414141"/>
         </TouchableOpacity>
       </View>
@@ -100,26 +182,27 @@ export default function App() {
       </View>
       {/* card menu */}
       <View style={{ width: '100%', flex: 1 }}>
-        <ScrollView
+        <Animated.FlatList
+          data={cardMenuItems}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={{ paddingBottom: 100 }}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ gap: 16}}
-        >
-          {cardMenuItems.map((item) => (
-            <CardMenu
-              key={item.id}
-              title={item.title}
-              desc={item.desc}
-              image={item.image}
-              onPress={() => console.log(`Open ${item.title}`)}
-              backgroundColor={item.backgroundColor}
-              textColor={item.textColor}
+          onScroll={scrollHandler}
+          scrollEventThrottle={16} // 16ms pour du 60fps
+          renderItem={({ item, index }) => (
+            <AnimatedCard 
+              item={item} 
+              index={index} 
+              scrollY={scrollY} 
             />
-          ))}
-        </ScrollView>
+          )}
+        />
       </View>
     </View>
   );
 }
+
+
 
 const styles = StyleSheet.create({
   header: {
