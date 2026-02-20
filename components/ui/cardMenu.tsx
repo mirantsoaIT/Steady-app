@@ -101,12 +101,12 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat_500Medium',
     },
     image: {
-        width: 230,
-        height: 230,
+        width: 260,
+        height: 260,
         borderRadius: 115,
         position: 'absolute',
         right: -20,
-        top: 35,
+        top: 10,
     },
     favoriteButton: {
         position: 'absolute',
