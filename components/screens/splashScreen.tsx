@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity } from 'react-native';
+import { Colors } from '@/constants/theme';
 import Animated, {
     useSharedValue,
     useAnimatedStyle,
@@ -308,8 +309,8 @@ const styles = StyleSheet.create({
         bottom: -50,
         gap: 50
     },
-    logoName: { fontSize: 24, color: '#1D546D', fontWeight: 'bold', fontFamily: 'Montserrat_500Medium' },
-    slogan: { fontSize: 30, color: '#F3F4F4', fontWeight: '400', textAlign: 'center', fontFamily: 'AnnieUseYourTelescope_400Regular' },
+    logoName: { fontSize: 24, color: Colors.darkSmooth, fontWeight: 'bold', fontFamily: 'Montserrat_500Medium' },
+    slogan: { fontSize: 30, color: Colors.white, fontWeight: '400', textAlign: 'center', fontFamily: 'AnnieUseYourTelescope_400Regular' },
     sloganBloc: { marginTop: 40},
     row: { flexDirection: 'row', alignItems: 'center', gap: 5},
     curves: {

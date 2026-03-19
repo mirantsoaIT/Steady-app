@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, ScrollView,
 import CardMenu from '@/components/ui/cardMenu';
 import { Power } from 'lucide-react-native';
 import LottieView from 'lottie-react-native';
+import { Colors } from '@/constants/theme';
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
@@ -100,40 +101,40 @@ export default function App() {
       title: 'KINETIC',
       desc: 'Videz vos stress et divertir votre esprit avec des mini-jeux ludiques.',
       image: require('../../assets/images/kinetic-card.png'),
-      backgroundColor: '#1D546D',
-      textColor: '#F3F4F4',
+      backgroundColor: Colors.primary,
+      textColor: Colors.white,
     },
     {
       id: 2,
       title: 'WALLET',
       desc: 'Gérez votre budget et vos dépenses pour une vie financière équilibrée.',
       image: require('../../assets/images/wallet-card.png'),
-      backgroundColor: '#061E29',
-      textColor: '#F3F4F4',
+      backgroundColor: Colors.darkSmooth,
+      textColor: Colors.white,
     },
     {
       id: 3,
       title: 'PLANNER',
       desc: 'Planifiez vos tâches et vos objectifs pour une organisation efficace.',
       image: require('../../assets/images/planner-card.png'),
-      backgroundColor: '#5F9598',
-      textColor: '#F3F4F4',
+      backgroundColor: Colors.secondary,
+      textColor: Colors.white,
     },
     {
       id: 4,
       title: 'FOCUS',
       desc: 'Restez concentré pendant vos sessions de travail.',
       image: require('../../assets/images/focus-card.png'),
-      backgroundColor: '#1D546D',
-      textColor: '#F3F4F4',
+      backgroundColor: Colors.primary,
+      textColor: Colors.white,
     },
     {
       id: 5,
       title: 'BREATHE',
       desc: 'Prennez vos écouteurs et détendez-vous avec nos musiques dédiées.',
       image: require('../../assets/images/music-card.png'),
-      backgroundColor: '#061E29',
-      textColor: '#F3F4F4',
+      backgroundColor: Colors.darkSmooth,
+      textColor: Colors.white,
     },
   ];
   return (
@@ -142,17 +143,17 @@ export default function App() {
       <View style={styles.header}>
         <View  style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
           <Image source={require('../../assets/images/steady-logo.png')} style={styles.steadyLogo} resizeMode="contain"/>
-          <Text style={{ fontSize: 20, fontFamily: 'Montserrat_600SemiBold', color: '#061E29' }}>STEADY</Text>
+          <Text style={{ fontSize: 20, fontFamily: 'Montserrat_600SemiBold', color: Colors.darkSmooth }}>STEADY</Text>
         </View>
         <TouchableOpacity style={{ padding: 8, borderRadius: 100 }} onPress={handleExit}>
-          <Power size={22} color="#414141"/>
+          <Power size={22} color={Colors.gray} />
         </TouchableOpacity>
       </View>
       {/* Question card */}
       <View style={styles.questionContainer}>
-        <Text style={{ fontSize: 32, fontFamily: 'Montserrat_700Bold', color: '#F3F4F4' }}>Que désirez-vous faire</Text>
-        <Text style={{ fontSize: 32, fontFamily: 'Montserrat_700Bold', color: '#FFD400' }}>aujourd'hui ?</Text>
-        <Text style={{ fontSize: 16, fontFamily: 'Montserrat_300Light', color: '#F3F4F4', marginTop: 8, width: 250 }}>Steady, votre compagnon de bien-être pour une vie équilibrée.</Text>
+        <Text style={{ fontSize: 32, fontFamily: 'Montserrat_700Bold', color: Colors.white }}>Que désirez-vous faire</Text>
+        <Text style={{ fontSize: 32, fontFamily: 'Montserrat_700Bold', color: Colors.yellow }}>aujourd'hui ?</Text>
+        <Text style={{ fontSize: 16, fontFamily: 'Montserrat_300Light', color: Colors.white, marginTop: 8, width: 250 }}>Steady, votre compagnon de bien-être pour une vie équilibrée.</Text>
         <LottieView
           source={require('../../assets/lotties/thinking.json')}
           autoPlay
@@ -177,8 +178,8 @@ export default function App() {
       </View>
       {/* Plan d'aujourd'hui */}
       <View style={{ width: '100%'}}>
-        <Text style={{ fontSize: 26, fontFamily: 'Montserrat_600SemiBold', color: '#1D546D' }}>Plan du moment</Text>
-        <Text style={{ fontSize: 16, fontFamily: 'Montserrat_400Regular', color: '#061E29', marginTop: 4 }}>Laisse tes doigts choisir pour toi.</Text>
+        <Text style={{ fontSize: 26, fontFamily: 'Montserrat_600SemiBold', color: Colors.primary }}>Plan du moment</Text>
+        <Text style={{ fontSize: 16, fontFamily: 'Montserrat_400Regular', color: Colors.darkSmooth, marginTop: 4 }}>Laisse tes doigts choisir pour toi.</Text>
       </View>
       {/* card menu */}
       <View style={{ width: '100%', flex: 1 }}>
@@ -212,7 +213,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   questionContainer: {
-    backgroundColor: '#061E29',
+    backgroundColor: Colors.primary,
     paddingLeft: 32,
     paddingTop: 25,
     width: '100%',
@@ -222,7 +223,7 @@ const styles = StyleSheet.create({
   },
   splashContainer: {
     flex: 1,
-    backgroundColor: '#87CEEB',
+    backgroundColor: Colors.tertiary,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -240,7 +241,7 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.white,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     paddingTop: 24,
@@ -263,7 +264,7 @@ const styles = StyleSheet.create({
   textIconList: {
     fontSize: 15, 
     fontFamily: 'Montserrat_400Regular', 
-    color: '#061E29', 
+    color: Colors.darkSmooth, 
     marginTop: 8, 
     textAlign: 'center'
   }
