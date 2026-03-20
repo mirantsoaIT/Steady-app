@@ -13,13 +13,14 @@ import Animated, {
   SharedValue,
   FadeInUp
 } from 'react-native-reanimated';
+import { router } from 'expo-router';
 
 // Composant card animé
 const CARD_HEIGHT = 220;
 const GAP = 10;
 const TOTAL_HEIGHT = CARD_HEIGHT + GAP;
 
-const AnimatedCard = ({ item, index, scrollY }: { item: any; index: number; scrollY: SharedValue<number> }) => {
+const AnimatedCard = ({ item, index, scrollY, onPress }: { item: any; index: number; scrollY: SharedValue<number>; onPress: () => void; }) => {
   const animatedStyle = useAnimatedStyle(() => {
     // On calcule la position de la carte par rapport au scroll
     const inputRange = [
@@ -65,7 +66,7 @@ const AnimatedCard = ({ item, index, scrollY }: { item: any; index: number; scro
     >
       <CardMenu
         {...item}
-        onPress={() => console.log(`Open ${item.title}`)}
+        onPress={onPress}
       />
     </Animated.View>
   );
@@ -95,7 +96,17 @@ export default function App() {
     { id: 5, image: require('../../assets/images/timer.png'), label: 'Pomodoro' },
     { id: 7, image: require('../../assets/images/wind.png'), label: 'Relaxer' },
   ];
-  const cardMenuItems = [
+  type ValidRoute = '/kinetic' | '/wallet' | '/planner' | '/focus' | '/breathe';
+
+  const cardMenuItems: Array<{
+    id: number;
+    title: string;
+    desc: string;
+    image: any;
+    backgroundColor: string;
+    textColor: string;
+    route: ValidRoute;
+  }> = [
     {
       id: 1,
       title: 'KINETIC',
@@ -103,6 +114,7 @@ export default function App() {
       image: require('../../assets/images/kinetic-card.png'),
       backgroundColor: Colors.primary,
       textColor: Colors.white,
+      route: '/kinetic',
     },
     {
       id: 2,
@@ -111,6 +123,7 @@ export default function App() {
       image: require('../../assets/images/wallet-card.png'),
       backgroundColor: Colors.darkSmooth,
       textColor: Colors.white,
+      route: '/wallet',
     },
     {
       id: 3,
@@ -119,6 +132,7 @@ export default function App() {
       image: require('../../assets/images/planner-card.png'),
       backgroundColor: Colors.secondary,
       textColor: Colors.white,
+      route: '/planner',
     },
     {
       id: 4,
@@ -127,6 +141,7 @@ export default function App() {
       image: require('../../assets/images/focus-card.png'),
       backgroundColor: Colors.primary,
       textColor: Colors.white,
+      route: '/focus',
     },
     {
       id: 5,
@@ -135,6 +150,7 @@ export default function App() {
       image: require('../../assets/images/music-card.png'),
       backgroundColor: Colors.darkSmooth,
       textColor: Colors.white,
+      route: '/breathe',
     },
   ];
   return (
@@ -194,7 +210,8 @@ export default function App() {
             <AnimatedCard 
               item={item} 
               index={index} 
-              scrollY={scrollY} 
+              scrollY={scrollY}
+              onPress={() => router.push(item.route as any)}
             />
           )}
         />
@@ -214,6 +231,7 @@ const styles = StyleSheet.create({
   },
   questionContainer: {
     backgroundColor: Colors.primary,
+    // backgroundColor: "#971111",
     paddingLeft: 32,
     paddingTop: 25,
     width: '100%',

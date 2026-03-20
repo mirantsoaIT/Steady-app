@@ -35,9 +35,19 @@ export const Colors = {
   // Neutres
   white: '#F3F4F4',
   gray: '#414141',
+  WhiteGray: '#99999965',
+  TransGray: '#c0c0c0c5',
+  smoothWhite: '#e0e0e0',
   
   // Accent
   yellow: '#FFD400',
+  transparentYellow: '#ffda22b2',
+  purple: '#9B59B6',
+  purpleLight: '#d07af1a6',
+
+  //Reste
+  Reste: '#ff5100',
+  ResteLight: '#ff51001c',
 };
 
 export const Fonts = Platform.select({
