@@ -31,13 +31,15 @@ export const Colors = {
   darkSmooth: '#061E29',
   secondary: '#5F9598',
   tertiary: '#87CEEB',
+  bgSmoothIcon: '#87cfeb67',
   
   // Neutres
   white: '#F3F4F4',
   gray: '#414141',
-  WhiteGray: '#99999965',
+  WhiteGray: '#d1cece8c',
   TransGray: '#c0c0c0c5',
   smoothWhite: '#e0e0e0',
+  BgInputField: '#ebebeb',
   
   // Accent
   yellow: '#FFD400',

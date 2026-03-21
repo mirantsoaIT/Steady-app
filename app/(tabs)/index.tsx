@@ -14,6 +14,7 @@ import Animated, {
   FadeInUp
 } from 'react-native-reanimated';
 import { router } from 'expo-router';
+import Logo from '@/components/ui/headerLogo';
 
 // Composant card animé
 const CARD_HEIGHT = 220;
@@ -112,7 +113,7 @@ export default function App() {
       title: 'KINETIC',
       desc: 'Videz vos stress et divertir votre esprit avec des mini-jeux ludiques.',
       image: require('../../assets/images/kinetic-card.png'),
-      backgroundColor: Colors.primary,
+      backgroundColor: Colors.darkSmooth,
       textColor: Colors.white,
       route: '/kinetic',
     },
@@ -121,7 +122,7 @@ export default function App() {
       title: 'WALLET',
       desc: 'Gérez votre budget et vos dépenses pour une vie financière équilibrée.',
       image: require('../../assets/images/wallet-card.png'),
-      backgroundColor: Colors.darkSmooth,
+      backgroundColor: Colors.primary,
       textColor: Colors.white,
       route: '/wallet',
     },
@@ -157,13 +158,36 @@ export default function App() {
     <View style={styles.mainContainer}>
       {/* Header */}
       <View style={styles.header}>
-        <View  style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-          <Image source={require('../../assets/images/steady-logo.png')} style={styles.steadyLogo} resizeMode="contain"/>
-          <Text style={{ fontSize: 20, fontFamily: 'Montserrat_600SemiBold', color: Colors.darkSmooth }}>STEADY</Text>
+        <Logo logoSource={require('../../assets/images/steady-logo.png')} />
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                    {/* Bouton Connexion outline */}
+          <TouchableOpacity 
+            style={{
+              paddingVertical: 8,
+              paddingHorizontal: 16,
+              borderRadius: 20,
+              borderWidth: 1,
+              borderColor: Colors.primary,
+              backgroundColor: 'transparent',
+            }}
+            onPress={() => router.push('/Login')}
+          >
+            <Text style={{
+              fontSize: 14,
+              fontFamily: 'Montserrat_600SemiBold',
+              color: Colors.primary,
+            }}>
+              Connexion
+            </Text>
+          </TouchableOpacity>
+          {/* Bouton Power
+          <TouchableOpacity 
+            style={{ padding: 8, borderRadius: 100 }} 
+            onPress={handleExit}
+          >
+            <Power size={22} color={Colors.gray} />
+          </TouchableOpacity> */}
         </View>
-        <TouchableOpacity style={{ padding: 8, borderRadius: 100 }} onPress={handleExit}>
-          <Power size={22} color={Colors.gray} />
-        </TouchableOpacity>
       </View>
       {/* Question card */}
       <View style={styles.questionContainer}>
@@ -205,7 +229,7 @@ export default function App() {
           contentContainerStyle={{ paddingBottom: 100 }}
           showsVerticalScrollIndicator={false}
           onScroll={scrollHandler}
-          scrollEventThrottle={16} // 16ms pour du 60fps
+          scrollEventThrottle={16}
           renderItem={({ item, index }) => (
             <AnimatedCard 
               item={item} 
@@ -231,7 +255,6 @@ const styles = StyleSheet.create({
   },
   questionContainer: {
     backgroundColor: Colors.primary,
-    // backgroundColor: "#971111",
     paddingLeft: 32,
     paddingTop: 25,
     width: '100%',
@@ -249,10 +272,6 @@ const styles = StyleSheet.create({
     width: 220,
     height: 220,
   },
-  steadyLogo: {
-    width: 54,
-    height: 54,
-  },
   textContainer: {
     marginTop: 20,
     alignItems: 'center',
@@ -262,7 +281,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    paddingTop: 24,
+    paddingVertical: 40,
     paddingHorizontal: 24,
     gap: 16,
   },

@@ -5,7 +5,7 @@ import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-na
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '@/constants/theme';
 
-type FooterButtonsProps = {
+type TabButtonsProps = {
     onButton1Press: () => void;
     onButton2Press: () => void;
     button1Label?: string;
@@ -14,14 +14,14 @@ type FooterButtonsProps = {
     button2Icon?: keyof typeof Ionicons.glyphMap;
 };
 
-export default function FooterButtons({
+export default function TabButtons({
     onButton1Press,
     onButton2Press,
     button1Label = 'Button 1',
     button2Label = 'Button 2',
     button1Icon = 'home',
     button2Icon = 'grid-outline',
-}: FooterButtonsProps) {
+}: TabButtonsProps) {
     const [activeTab, setActiveTab] = useState(0);
     const translateX = useSharedValue(0);
     const glassWidth = useSharedValue(0);
@@ -64,51 +64,51 @@ export default function FooterButtons({
 
     return (
         <View style={styles.footer}>
-        <View style={styles.tabContainer}>
-            {/* Liquid Glass animé */}
-            <Animated.View style={[styles.glassWrapper, animatedStyle]}>
-            <LiquidGlassView
-                style={[
-                styles.liquidGlass,
-                !isLiquidGlassSupported && { backgroundColor: 'rgba(255,255,255,0.5)' },
-                ]}
-                interactive
-                effect="clear"
-            />
-            </Animated.View>
+            <View style={styles.tabContainer}>
+                {/* Liquid Glass animé */}
+                <Animated.View style={[styles.glassWrapper, animatedStyle]}>
+                <LiquidGlassView
+                    style={[
+                    styles.liquidGlass,
+                    !isLiquidGlassSupported && { backgroundColor: 'rgba(255, 255, 255, 0.39)' },
+                    ]}
+                    interactive
+                    effect="clear"
+                />
+                </Animated.View>
 
-            {/* Bouton 1 */}
-                <TouchableOpacity 
-                    style={styles.button} 
-                    onPress={handleButton1Press}
-                    onLayout={handleButton1Layout}
-                >
+                {/* Bouton 1 */}
+                    <TouchableOpacity 
+                        style={styles.button} 
+                        onPress={handleButton1Press}
+                        onLayout={handleButton1Layout}
+                    >
+                        <Ionicons 
+                            name={button1Icon} 
+                            size={18} 
+                            color={activeTab === 0 ? Colors.smoothWhite : Colors.WhiteGray} 
+                        />
+                        <Text style={[styles.buttonText, activeTab === 0 && styles.activeText]}>
+                            {button1Label}
+                        </Text>
+                    </TouchableOpacity>
+
+                    {/* Bouton 2 */}
+                    <TouchableOpacity 
+                        style={styles.button} 
+                        onPress={handleButton2Press}
+                        onLayout={handleButton2Layout}
+                    >
                     <Ionicons 
-                        name={button1Icon} 
-                        size={18} 
-                        color={activeTab === 0 ? Colors.primary : Colors.darkSmooth} 
-                    />
-                    <Text style={[styles.buttonText, activeTab === 0 && styles.activeText]}>
-                        {button1Label}
-                    </Text>
-                </TouchableOpacity>
-
-                {/* Bouton 2 */}
-                <TouchableOpacity 
-                    style={styles.button} 
-                    onPress={handleButton2Press}
-                    onLayout={handleButton2Layout}
-                >
-                <Ionicons 
-                        name={button2Icon} 
-                        size={18} 
-                        color={activeTab === 1 ? Colors.primary : Colors.darkSmooth} 
-                    />
-                    <Text style={[styles.buttonText, activeTab === 1 && styles.activeText]}>
-                        {button2Label}
-                    </Text>
-                </TouchableOpacity>
-        </View>
+                            name={button2Icon} 
+                            size={18} 
+                            color={activeTab === 1 ? Colors.smoothWhite : Colors.WhiteGray} 
+                        />
+                        <Text style={[styles.buttonText, activeTab === 1 && styles.activeText]}>
+                            {button2Label}
+                        </Text>
+                    </TouchableOpacity>
+            </View>
         </View>
     );
 }
@@ -116,9 +116,9 @@ export default function FooterButtons({
 const styles = StyleSheet.create({
     footer: {
         paddingHorizontal: 24,
-        position: 'absolute',
-        bottom: 35,
-        left: 95,
+        // position: 'absolute',
+        // bottom: 35,
+        // left: 95,
     },
     tabContainer: {
         position: 'relative',
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 16,
         padding: 4,
-        backgroundColor: 'rgba(180, 178, 178, 0.2)',
+        backgroundColor: Colors.darkSmooth,
         borderRadius: 100,
         alignSelf: 'center',
     },
@@ -139,8 +139,11 @@ const styles = StyleSheet.create({
     liquidGlass: {
         flex: 1,
         borderRadius: 100,
-        borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.3)',
+        borderWidth: 1.3,
+        borderTopColor: 'rgba(255, 255, 255, 0.34)', 
+        borderLeftColor: 'rgba(255, 255, 255, 0.34)',
+        borderRightColor: 'transparent',
+        borderBottomColor: 'transparent',
     },
     button: {
         flexDirection: 'column',
@@ -154,9 +157,9 @@ const styles = StyleSheet.create({
     buttonText: {
         fontSize: 16,
         fontFamily: 'Montserrat_600SemiBold',
-        color: Colors.darkSmooth,
+        color: Colors.WhiteGray,
     },
     activeText: {
-        color: Colors.primary,
+        color: Colors.smoothWhite,
     },
 });

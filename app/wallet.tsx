@@ -2,17 +2,58 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { router, Stack } from 'expo-router';
 import { Colors } from '@/constants/theme';
 import Ionicons from '@expo/vector-icons/build/Ionicons';
-import FooterButtons from '@/components/ui/FooterButtons';
-import LottieView from 'lottie-react-native';
 import Header from '@/components/ui/header';
-
+import TabButtons from '@/components/ui/TabButtons';
 
 export default function WalletScreen() {
-    const variableExpenses = [
-        { id: 1, category: 'Quotidien', percentage: '30%', amount: '60.000 AR', icon: 'wallet-outline', Background: 'rgba(180, 178, 178, 0.2)' },
-        { id: 2, category: 'Exceptionnel', percentage: '20%', amount: '40.000 AR', icon: 'game-controller-outline', Background: 'rgba(180, 178, 178, 0.2)' },
-        { id: 3, category: 'Invest.', percentage: '15%', amount: '30.000 AR', icon: 'car-outline', Background: 'rgba(180, 178, 178, 0.2)' },
-    ];
+
+    // static data
+    const budgetData = {
+        unity: {
+            amount: 'AR',
+        },
+        monthly: {
+            total: 200000,
+            periodMonthly: '04/2026',
+            type: 'Mensuel',
+            HebdoPeriod: '28/04/2026 - 04/05/2026',
+        },
+        fixedExpenses: {
+            percentage: 50,
+            amount: 100000,
+        },
+        variableExpenses: {
+            quotidien: {
+                id: 1,
+                category: 'Quotidien',
+                percentage: 30,
+                amount: 60000,
+                icon: 'wallet-outline',
+                background: 'rgba(180, 178, 178, 0.2)',
+            },
+            exceptionnel: {
+                id: 2,
+                category: 'Exceptionnel',
+                percentage: 20,
+                amount: 40000,
+                icon: 'game-controller-outline',
+                background: 'rgba(180, 178, 178, 0.2)',
+            },
+            investissement: {
+                id: 3,
+                category: 'Invest.',
+                percentage: 15,
+                amount: 30000,
+                icon: 'car-outline',
+                background: 'rgba(180, 178, 178, 0.2)',
+            },
+        },
+        remaining: {
+            amount: 10000,
+        },
+    };
+    const variableExpensesArray = Object.values(budgetData.variableExpenses);
+
     return (
         <>
             <Stack.Screen 
@@ -36,7 +77,7 @@ export default function WalletScreen() {
                         style={styles.notificationButton  as any}
                     >
                         <Ionicons name="notifications-outline" size={24} color={Colors.dark  as any} />
-                        {/* Badge de notification (optionnel) */}
+                        {/* Badge de notification */}
                         <View style={styles.badge  as any} />
                     </TouchableOpacity>
                 </View>
@@ -49,22 +90,23 @@ export default function WalletScreen() {
                             {/* <View style={styles.div1}/> */}
                             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 4}}>
                                 <Text style={{ fontSize: 16, fontFamily: 'Montserrat_400Regular', color: Colors.gray }}>Budget</Text>
-                                <Text style={{ fontSize: 14, fontFamily: 'Montserrat_400Regular', color: Colors.white, backgroundColor: Colors.primary, paddingLeft: 8, paddingRight: 8, paddingTop: 4, paddingBottom: 4, borderRadius: 20 }}>Mensuel</Text>
+                                <Text style={{ fontSize: 14, fontFamily: 'Montserrat_400Regular', color: Colors.white, backgroundColor: Colors.primary, paddingLeft: 8, paddingRight: 8, paddingTop: 4, paddingBottom: 4, borderRadius: 20 }}>{budgetData.monthly.type}</Text>
                             </View> 
                             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 4}}>
                                 <View style={{flexDirection: 'row', alignItems: 'baseline', gap: 4}}>
-                                    <Text style={{ fontSize: 50, fontFamily: 'Montserrat_600SemiBold', color: Colors.darkSmooth }}>200.000</Text>
-                                    <Text style={{ fontSize: 18, fontFamily: 'Montserrat_600SemiBold', color: Colors.gray}}>AR</Text>
+                                    <Text style={{ fontSize: 50, fontFamily: 'Montserrat_600SemiBold', color: Colors.darkSmooth }}>{budgetData.monthly.total.toLocaleString()}</Text>
+                                    <Text style={{ fontSize: 18, fontFamily: 'Montserrat_600SemiBold', color: Colors.gray}}>{budgetData.unity.amount}</Text>
                                 </View>
-                                <LottieView 
+                                {/* <LottieView 
                                     source={require('../assets/lotties/Coins.json')} 
                                     autoPlay
                                     loop
                                     style={{ width: 80, height: 80 }}
-                                />
+                                /> */}
+                                <Image source={require('../assets/images/wallet-card.png')} style={styles.image} resizeMode="contain" />
                             </View>
                             <View style={{flexDirection: 'row', alignItems: 'baseline', gap: 4}}>
-                                <Text style={{ fontSize: 16, fontFamily: 'Montserrat_400Regular', color: Colors.gray}}>04/2026</Text>
+                                <Text style={{ fontSize: 16, fontFamily: 'Montserrat_400Regular', color: Colors.gray}}>{budgetData.monthly.periodMonthly}</Text>
                             </View>
                         </View>
                         <View style={{ 
@@ -106,10 +148,10 @@ export default function WalletScreen() {
                                     source={require('../assets/images/wallet.jpg')} 
                                     style={{ width: 40, height: 40, borderRadius: 20 }} 
                                 />
-                                <Text style={{ fontSize: 20, fontFamily: 'Montserrat_600SemiBold', color: Colors.darkSmooth }}>50%</Text>
+                                <Text style={{ fontSize: 20, fontFamily: 'Montserrat_600SemiBold', color: Colors.darkSmooth }}>{budgetData.fixedExpenses.percentage}%</Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 20 }}>
-                                <Text style={{ fontSize: 18, fontFamily: 'Montserrat_400Regular', color: Colors.primary }}>100.000 AR</Text>
+                                <Text style={{ fontSize: 18, fontFamily: 'Montserrat_600SemiBold', color: Colors.primary }}>{budgetData.fixedExpenses.amount.toLocaleString('fr-FR')} {budgetData.unity.amount}</Text>
                                 <Ionicons name="chevron-forward" size={20} color={Colors.primary} />
                             </View>
                         </TouchableOpacity>
@@ -122,11 +164,11 @@ export default function WalletScreen() {
                             gap: 12,
                             justifyContent: 'space-between',
                         }}>
-                            {variableExpenses.map((item) => (
+                            {variableExpensesArray.map((item) => (
                                 <TouchableOpacity 
                                     key={item.id}
                                     style={{
-                                        backgroundColor: item.Background,
+                                        backgroundColor: 'rgba(180, 178, 178, 0.2)',
                                         borderRadius: 30,
                                         padding: 16,
                                         flex: 1,
@@ -166,14 +208,14 @@ export default function WalletScreen() {
                                         color: Colors.dark as any,
                                         marginBottom: 6 
                                     }}>
-                                        {item.percentage}
+                                        {item.percentage}%
                                     </Text>
                                     <Text style={{ 
                                         fontSize: 16, 
                                         fontFamily: 'Montserrat_600SemiBold', 
                                         color: Colors.primary as any, 
                                     }}>
-                                        {item.amount}
+                                        {item.amount} {budgetData.unity.amount}
                                     </Text>
                                 </TouchableOpacity>
                             ))}
@@ -187,7 +229,7 @@ export default function WalletScreen() {
                                 alignItems: 'center', 
                                 justifyContent: 'space-between', 
                                 padding: 24, 
-                                borderRadius: 40 
+                                borderRadius: 40,
                             }}
                             onPress={() => console.log('Budget cliqué')}
                         >
@@ -198,14 +240,14 @@ export default function WalletScreen() {
                                 />
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 20 }}>
-                                <Text style={{ fontSize: 15, fontFamily: 'Montserrat_600SemiBold', color: Colors.Reste, backgroundColor: Colors.ResteLight, paddingLeft: 10, paddingRight: 10, paddingTop: 5, borderRadius: 10 }}>10.000 AR</Text>
+                                <Text style={{ fontSize: 15, fontFamily: 'Montserrat_600SemiBold', color: Colors.Reste, backgroundColor: Colors.ResteLight, paddingLeft: 10, paddingRight: 10, paddingTop: 5, borderRadius: 10 }}>{budgetData.remaining.amount.toLocaleString('fr-FR')} {budgetData.unity.amount}</Text>
                                 <Ionicons name="chevron-forward" size={20} color={Colors.primary} />
                             </View>
                         </TouchableOpacity>
                     </View>
-                    {/* Footer */}
                 </View>
-                <FooterButtons
+                {/* Footer tabs */}
+                <TabButtons
                     onButton1Press={() => console.log('Dashboard Pressed')}
                     onButton2Press={() => console.log('Home Pressed')}
                     button1Label="Accueil"
@@ -269,5 +311,13 @@ const styles = StyleSheet.create({
         borderRadius: 45,
         padding: 7,
         justifyContent: 'center',
-    }
+    },
+    image: {
+        width: 260,
+        height: 260,
+        borderRadius: 115,
+        position: 'absolute',
+        right: -80,
+        top: -50,
+    },
 });
